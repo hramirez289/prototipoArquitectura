@@ -1,0 +1,260 @@
+<html><head><base href="/" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TechStore - Modern E-commerce</title>
+    <link rel="stylesheet" href="styles.css">
+
+</head>
+<body>
+    <nav>
+        <div class="logo">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+            </svg>
+            eGESVEN
+        </div>
+        <div class="search-container">
+            <input type="text" class="search-input" placeholder="Buscar productos...">
+        </div>
+        <div class="cart-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M9 20a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm7 0a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm-7-4h7a2 2 0 0 0 1.95-1.57L20 7H5.21l-.94-2H2v2h2l3.6 7.59A2 2 0 0 0 9 16z"/>
+            </svg>
+            <span class="cart-count">0</span>
+        </div>
+        <div class="login-btn">
+            <button class="login-button">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                    <circle cx="12" cy="7" r="4"/>
+                </svg>
+                Login
+            </button>
+        </div>
+    </nav>
+
+    <main>
+        <div class="products-grid"></div>
+    </main>
+
+    <div class="cart-panel">
+        <div class="cart-header">
+            <h2>Carrito de compras</h2>
+            <button class="close-cart">×</button>
+        </div>
+        <div class="cart-items"></div>
+        <div class="cart-total">
+            <h3>Total: $<span class="total-amount">0</span></h3>
+            <button class="clear-cart">Limpiar</button>
+        </div>
+    </div>
+
+    <div class="login-modal">
+        <div class="login-modal-content">
+            <div class="login-modal-header">
+                <h2>Login / Register</h2>
+                <button class="close-login">×</button>
+            </div>
+            <form class="login-form">
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" required>
+                </div>
+                <button type="submit" class="login-submit">Login</button>
+                <p class="register-link">Don't have an account? <a href="#" class="switch-to-register">Register</a></p>
+            </form>
+            <form class="register-form hidden">
+                <div class="form-group">
+                    <label for="reg-name">Full Name</label>
+                    <input type="text" id="reg-name" required>
+                </div>
+                <div class="form-group">
+                    <label for="reg-email">Email</label>
+                    <input type="email" id="reg-email" required>
+                </div>
+                <div class="form-group">
+                    <label for="reg-password">Password</label>
+                    <input type="password" id="reg-password" required>
+                </div>
+                <div class="form-group">
+                    <label for="reg-confirm-password">Confirm Password</label>
+                    <input type="password" id="reg-confirm-password" required>
+                </div>
+                <button type="submit" class="register-submit">Register</button>
+                <p class="login-link">Already have an account? <a href="#" class="switch-to-login">Login</a></p>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Updated product data with image URLs
+        const products = [
+            { id: 1, name: "Notebook Gamer", price: 850000, image: `<img src="image/notebook_gamer.png" alt="Premium Laptop">`},
+            { id: 2, name: "Mouse Inhalambrico", price: 37000, image: `<img src="image/mouse_inhalambrico.png" alt="mouse gamer">` },
+            { id: 3, name: "Teclado Gamer", price: 70000, image: `<img src="image/teclado_gamer.png" alt="teclado gamer">` },
+            { id: 4, name: "Monitor 4K", price: 299000, image: `<img src="image/monitor_4k.png" alt="monitor 4k">` },
+            { id: 5, name: "Audifonos Inhalambricos", price: 45000, image: `<img src="image/audifonos_inhalambricos.png" alt="audifonos">` },
+            { id: 6, name: "Smart Watch", price: 150000, image: `<img src="image/smart-watch.png" alt="smert watch">` },
+            { id: 7, name: "Tablet Pro", price: 240000, image: `<img src="image/tablet.png" alt="tablet">` },
+            { id: 8, name: "PC Escritorio", price: 350000, image: `<img src="image/pc-escritorio.png" alt="pc escritorio">` },
+            { id: 9, name: "Pc Gamer", price: 1200000, image: `<img src="image/pc-gamer.png" alt="pc gamer">` },
+            { id: 10, name: "Microfono Profesional", price: 180000, image: `<img src="image/microfono-profesional.png" alt="microfono">` },
+            { id: 11, name: "Dron Camara 4K", price: 1430000, image: `<img src="image/dron.png" alt="dron">` },
+            { id: 12, name: "Mouse Pad Gamer", price: 57000, image: `<img src="image/mouse-pad.png" alt="mausepad">` },
+            { id: 13, name: "Cargador Iphone", price: 12000, image: `<img src="image/cargador.png" alt="cargador">` },
+            { id: 14, name: "Notebook Lenovo", price: 350000, image: `<img src="image/notebook-lenovo.png" alt="notebook lenovo">` },
+            { id: 15, name: "Silla Gamer", price: 120000, image: `<img src="image/silla-gamer.png" alt="silla gamer">` }
+        ];
+
+        let cart = [];
+
+        // DOM Elements
+        const productsGrid = document.querySelector('.products-grid');
+        const cartPanel = document.querySelector('.cart-panel');
+        const cartIcon = document.querySelector('.cart-icon');
+        const closeCart = document.querySelector('.close-cart');
+        const cartItems = document.querySelector('.cart-items');
+        const cartCount = document.querySelector('.cart-count');
+        const totalAmount = document.querySelector('.total-amount');
+        const clearCartBtn = document.querySelector('.clear-cart');
+        const searchInput = document.querySelector('.search-input');
+
+        // Login modal elements
+        const loginModal = document.querySelector('.login-modal');
+        const loginButton = document.querySelector('.login-button');
+        const closeLogin = document.querySelector('.close-login');
+        const loginForm = document.querySelector('.login-form');
+        const registerForm = document.querySelector('.register-form');
+        const switchToRegister = document.querySelector('.switch-to-register');
+        const switchToLogin = document.querySelector('.switch-to-login');
+
+        // Display products
+        function displayProducts(productsToShow = products) {
+            productsGrid.innerHTML = productsToShow.length ? 
+                productsToShow.map(product => `
+                    <div class="product-card">
+                        <div class="product-image">${product.image}</div>
+                        <div class="product-name">${product.name}</div>
+                        <div class="product-price">$${product.price.toLocaleString('es-CL')}</div>
+                        <button class="add-to-cart" onclick="addToCart(${product.id})">Agregar al carrito</button>
+                    </div>
+                `).join('') :
+                '<div class="no-results">No products found</div>';
+        }
+
+        // Add to cart
+        function addToCart(productId) {
+            const product = products.find(p => p.id === productId);
+            const existingItem = cart.find(item => item.id === productId);
+
+            if (existingItem) {
+                existingItem.quantity++;
+            } else {
+                cart.push({ ...product, quantity: 1 });
+            }
+
+            updateCart();
+            openCart();
+        }
+
+        // Update cart
+        function updateCart() {
+            cartCount.textContent = cart.reduce((sum, item) => sum + item.quantity, 0);
+            
+            cartItems.innerHTML = cart.map(item => `
+                <div class="cart-item">
+                    <div class="product-image">${item.image}</div>
+                    <div class="cart-item-details">
+                        <div class="product-name">${item.name}</div>
+                        <div class="product-price">$${item.price.toLocaleString('es-CL')} × ${item.quantity}</div>
+                    </div>
+                    <button onclick="removeFromCart(${item.id})">×</button>
+                </div>
+            `).join('');
+
+            totalAmount.textContent = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0).toLocaleString('es-CL');
+        }
+
+        // Remove from cart
+        function removeFromCart(productId) {
+            cart = cart.filter(item => item.id !== productId);
+            updateCart();
+        }
+
+        // Clear cart
+        function clearCart() {
+            cart = [];
+            updateCart();
+        }
+
+        // Toggle cart panel
+        function toggleCart() {
+            cartPanel.classList.toggle('open');
+        }
+
+        function openCart() {
+            cartPanel.classList.add('open');
+        }
+
+        // Search functionality
+        searchInput.addEventListener('input', (e) => {
+            const searchTerm = e.target.value.toLowerCase();
+            const filteredProducts = products.filter(product => 
+                product.name.toLowerCase().includes(searchTerm)
+            );
+            displayProducts(filteredProducts);
+        });
+
+        // Event listeners for cart
+        cartIcon.addEventListener('click', toggleCart);
+        closeCart.addEventListener('click', toggleCart);
+        clearCartBtn.addEventListener('click', clearCart);
+
+        // Login modal functionality
+        loginButton.addEventListener('click', () => {
+            loginModal.classList.add('open');
+        });
+
+        closeLogin.addEventListener('click', () => {
+            loginModal.classList.remove('open');
+        });
+
+        switchToRegister.addEventListener('click', (e) => {
+            e.preventDefault();
+            loginForm.classList.add('hidden');
+            registerForm.classList.remove('hidden');
+        });
+
+        switchToLogin.addEventListener('click', (e) => {
+            e.preventDefault();
+            registerForm.classList.add('hidden');
+            loginForm.classList.remove('hidden');
+        });
+
+        loginForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            // Add login logic here
+            console.log('Login submitted');
+        });
+
+        registerForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            // Add registration logic here
+            console.log('Registration submitted');
+        });
+
+        // Close modal when clicking outside
+        loginModal.addEventListener('click', (e) => {
+            if (e.target === loginModal) {
+                loginModal.classList.remove('open');
+            }
+        });
+
+        // Initial display
+        displayProducts();
+    </script>
+</body></html>
